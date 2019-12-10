@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #1ea3cc;
+    /* background-color: #00ff40; */
+}
+button{
+    background: #bd5252;
+    color:aqua;
+    padding: 10px;
+}
+button:hover{
+    background: aqua;
+    color:#bd5252;
+}
+</style>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <br>
+    <button onclick="Start()">start</button>
+    <button onclick="ShowMines()">ShowMines</button>
+    <button onclick="Stop()">Stop</button>
+    
+  
+    <script>
+
+/*         function ShowMines()
+    }
+    var img = new Image();
+      img.src = 'https://cdn.pixabay.com/photo/2017/10/16/21/23/army-2858535_960_720.png';
+        function Stop() */
+
+        var mycanvas=document.getElementById("myCanvas");
+    
+    var ctx=mycanvas.getContext("2d");
+    console.log(ctx)
+    var solider=[0,400];
+    var img = new Image();
+    img.src = 'https://cdn.pixabay.com/photo/2017/10/16/21/23/army-2858535_960_720.png';
+    var imgWidth = 50;
+    var imgHeight = 100;
+    var bombs=[];
+  function Start() {
+    placeflag();
+
+    document.body.addEventListener("keydown",function(e){
+        switch(e.keyCode)
+        {
+            case 38:
+            moveUp();
+            break;
+            case 39:
+            moveRight();
+            break;
+            case 37:
+            moveLeft();
+            break;
+            case 40:
+            moveDown();
+            break;    
+        }
+        check()
+        console.log(solider[0]+","+solider[1])
+    })
+    setTimeout(() => {
+        ctx.drawImage(img, solider[0], solider[1], imgWidth, imgHeight);
+    }, 100);
+    
+}
+    function placemaines(){
+        bombDraw(100,100);
+        bombDraw(300,200);
+        bombDraw(250,300);
+        bombDraw(150,250);
+    }
+    function placeflag(){
+        var flagImg = new Image();
+        flagImg.src = 'http://pluspng.com/img-png/flag-logo-png-communist-flag-protest-red-revolution-socialist-486.png'
+        console.log("hflagto");
+        setTimeout(() => {
+            ctx.drawImage(flagImg, 425,0, 70, 70);
+        }, 100);
+    }
+
+    function bombDraw(x,y){
+        var bombImg = new Image();
+        bombImg.src = 'https://cdn.pixabay.com/photo/2018/02/23/10/48/bomb-3175208_960_720.png'
+        console.log("ho");
+        setTimeout(() => {
+            ctx.drawImage(bombImg, x,y, 70, 70);
+        }, 100);
+        bombs.push(bombImg);
+
+    }
+    function moveRight(){
+        console.log("ok");
+        if (solider[0]<430){
+            solider[0]+=4;
+        ctx.clearRect(0,0,500,500)
+        placeflag();
+        ctx.drawImage(img, solider[0], solider[1], imgWidth, imgHeight);
+        }
+        
+    } 
+    function moveLeft(){
+
+    if (solider[0]>0){
+        solider[0]-=4;
+        ctx.clearRect(0,0,500,500)
+        placeflag();
+        ctx.drawImage(img, solider[0], solider[1], imgWidth, imgHeight);
+    }
+      
+    } 
+    function moveUp(){
+        if (solider[1]>0){
+        solider[1]-=4;
+        ctx.clearRect(0,0,500,500)
+        placeflag();
+        ctx.drawImage(img, solider[0], solider[1], imgWidth, imgHeight);
+
+        }
+        
+    } 
+    function moveDown(){
+        if (solider[1]<400){
+        solider[1]+=4;
+        ctx.clearRect(0,0,500,500)
+        placeflag();
+        ctx.drawImage(img, solider[0], solider[1], imgWidth, imgHeight);
+        }
+        
+    } 
+    function ShowMines(){
+        placemaines();
+        setTimeout(function(){
+            ctx.clearRect(0,0,500,500)
+            placeflag();
+        ctx.drawImage(img, solider[0], solider[1], imgWidth, imgHeight);
+        },1000)
+    }
+
+    function Stop(){
+        console.log("blah")
+        alert ("game over")
+    }
+    function check(){
+        if (solider[0]==100 && solider[1]==100){
+            console.log ("boom")
+        }
+        if (solider[0]>100 && solider[0]<170&&solider[1]>100&&solider[1]<170){
+            console.log ("boom2")
+            alert ("boooooooooooooom!!!!!!!!")
+        }
+        if (solider[0]>350&& solider[0]<500&&solider[1]>0&&solider[1]<70){
+            ctx.clearRect(0,0,500,500)
+            var img1 = new Image();
+            img1.src = 'http://www.clipartroo.com/images/0/you-won-clipart-0.gif';
+            ctx.drawImage(img1, 0, 0);
+        }
+    }
+
+    </script>
+</body>
+</html>
